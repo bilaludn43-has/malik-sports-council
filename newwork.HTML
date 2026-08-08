@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MALIK SPORTS COUNCIL</title>
+    <style>
+        /* Body Background Fix */
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--primary-bg);
+            color: rgb(254, 254, 254);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.85)), 
+                              url('WhatsApp Image 2026-06-06 at 10.17.37 AM.JPEG');
+            background-size: cover; 
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            transition: background 0.5s ease;
+        }
+        :root {
+            --primary-bg: #090d16;
+            --accent-color: #007bff;
+            
+            --card-cricket: #0284c7;
+            --card-football: #16a34a;
+            --card-hockey: #ea580c;
+            --card-snooker: #841a58;
+        }
+        .container { 
+            width: 95%; 
+            max-width: 1000px; 
+            background: rgba(76, 78, 230, 0.7); 
+            backdrop-filter: blur(1px); 
+            -webkit-backdrop-filter: blur(1px);
+            padding: 24px; 
+            border-radius: 16px; 
+            text-align: center; 
+            margin: 20px; 
+            box-shadow: 0 12px 40px rgba(114, 15, 15, 0.6); 
+            border: 1px solid rgba(255,255,255,0.08); 
+        }
+        .hidden { display: none !important; }
+        .navbar { 
+            margin-bottom: 25px; 
+            border-bottom: 1px solid rgba(255,255,255,0.1); 
+            padding-bottom: 15px; 
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .navbar span { 
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            opacity: 0.8; 
+            cursor: pointer; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+        .navbar span:hover { 
+            opacity: 1;
+            color: #ffc107;
+            background: rgba(255,255,255,0.05);
+        }
+        .navbar .active-nav {
+            opacity: 1;
+            color: #ffc107;
+            border-color: rgba(255,193,7,0.3);
+            background: rgba(255,193,7,0.05);
+        }
+        .sports-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+            gap: 15px; 
+            margin-top: 20px; 
+        }
+        .sport-card { 
+            padding: 35px 15px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            font-weight: 800; 
+            border: 2px solid transparent; 
+            text-transform: uppercase;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .sport-card .sport-icon {
+            font-size: 28px;
+        }
+        .sport-card.cricket { background: var(--card-cricket); }
+        .sport-card.football { background: var(--card-football); }
+        .sport-card.hockey { background: var(--card-hockey); }
+        .sport-card.snooker { background: var(--card-snooker); }
+        
+        .sport-card:hover { 
+            transform: translateY(-6px); 
+            border-color: white; 
+            box-shadow: 0 8px 25px rgba(48, 7, 183, 0.1);
+        }
+        
+        .form-group { text-align: left; margin-bottom: 15px; }
+        label { display: block; margin-bottom: 6px; font-size: 0.85rem; color: #b4c6ef; font-weight: 600; }
+        input, select, textarea { 
+            width: 100%; 
+            padding: 12px; 
+            border-radius: 8px; 
+            border: 1px solid rgba(255,255,255,0.1); 
+            box-sizing: border-box; 
+            background: rgba(15, 23, 42, 0.9); 
+            color: white; 
+            font-weight: 600; 
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+        }
+        .btn { 
+            padding: 12px 25px; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            margin: 5px; 
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .btn-blue { background: #007bff; color: white; }
+        .btn-green { background: #198754; color: white; }
+        .btn-gray { background: #4b5563; color: white; }
+        .btn-red { background: #dc3545; color: white; }
+        .btn-orange { background: #ffc107; color: #000; }
+        .btn-sm { padding: 6px 12px; font-size: 13px; border-radius: 6px; margin: 2px; }
+        
+        .squad-grid { 
+            display: grid; 
+            grid-template-columns: repeat(5, 1fr); 
+            gap: 12px; 
+            margin-top: 20px; 
+        }
+        @media (max-width: 768px) { .squad-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 480px) { .squad-grid { grid-template-columns: repeat(2, 1fr); } }
+        
+        .player-box { 
+            background: rgba(4, 37, 9, 0.05); 
+            color: white; 
+            padding: 12px 8px; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            min-height: 120px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 0.8rem; 
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.2s;
+            position: relative;
+        }
+        .player-box:hover {
+            background: rgba(108, 17, 17, 0.1);
+            border-color: var(--accent-color);
+        }
+        .player-box img { 
+            width: 55px; 
+            height: 55px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            margin-bottom: 6px; 
+            background: #253147; 
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+        .player-box.filled { 
+            background: rgba(25, 135, 84, 0.15); 
+            border: 2px solid #198754; 
+        }
+        .player-box .badge-shirt {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            background: rgba(0,0,0,0.6);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+            color: #ffc107;
+            border: 1px solid rgba(255,193,7,0.3);
+        }
+        .teams-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+            gap: 20px; 
+            margin-top: 20px; 
+        }
+        .team-card { 
+            background: rgba(255,255,255,0.04); 
+            padding: 20px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            transition: all 0.3s; 
+            border: 1px solid rgba(255,255,255,0.06); 
+            text-align: left;
+            position: relative;
+        }
+        .team-card:hover { 
+            background: rgba(255,255,255,0.08); 
+            transform: scale(1.03); 
+            border-color: var(--accent-color);
+        }
+        .team-card .sport-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+        }
+        
+        .scout-table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px; 
+            background: #0f172a; 
+            color: #f1f5f9; 
+            border-radius: 10px; 
+            overflow: hidden; 
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .scout-table th, .scout-table td { 
+            padding: 14px; 
+            border: 1px solid rgba(255,255,255,0.05); 
+            text-align: left; 
+        }
+        .scout-table th { 
+            background: rgba(255,255,255,0.05); 
+            font-weight: bold; 
+            color: #ffc107;
+        }
+        .scout-table img { 
+            width: 40px; 
+            height: 40px; 
+            border-radius: 50%; 
+            object-fit: cover;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .deadline-bar { 
+            padding: 15px; 
+            border-radius: 10px; 
+            margin-bottom: 20px; 
+            font-weight: bold; 
+            font-size: 16px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        .date-open { 
+            background: rgba(25, 135, 84, 0.2); 
+            border: 1.5px solid #198754; 
+            color: #2ec4b6;
+        }
+        .date-closed { 
+            background: rgba(220, 53, 69, 0.2); 
+            border: 1.5px solid #dc3545; 
+            color: #f87171;
+        }
+
+        .admin-panel { 
+            background: #0e131f; 
+            border: 2px solid #ffc107; 
+            padding: 24px; 
+            border-radius: 14px; 
+            margin-bottom: 25px; 
+            text-align: left; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6); 
+        }
+        .admin-table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 15px; 
+            background: rgba(15, 23, 42, 0.6); 
+            color: white; 
+            font-size: 13px;
+        }
+        .admin-table th, .admin-table td { 
+            padding: 10px; 
+            border: 1px solid rgba(255,255,255,0.08); 
+            text-align: left; 
+        }
+        .admin-table th { 
+            background: rgba(255,255,255,0.05); 
+            color: #ffc107; 
+        }
+
+        .groups-container { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+            gap: 15px; 
+            margin-top: 15px; 
+        }
+        .group-box { 
+            background: rgba(255,255,255,0.03); 
+            border: 1.5px dashed rgba(255,193,7,0.4); 
+            padding: 15px; 
+            border-radius: 10px; 
+            text-align: left; 
+        }
+        .group-box h3 { 
+            margin-top: 0; 
+            color: #ffc107; 
+            border-bottom: 1px solid rgba(255,255,255,0.1); 
+            padding-bottom: 8px; 
+            text-align: center;
+            font-size: 15px;
+        }
+        .group-box ul { padding-left: 20px; margin-bottom: 0; }
+        .group-box li { margin-bottom: 5px; font-weight: bold; font-size: 13px; }
+
+        .challan-box { 
+            background: rgba(13, 20, 35, 0.95); 
+            color: white; 
+            padding: 30px; 
+            border-radius: 12px; 
+            max-width: 500px; 
+            margin: 20px auto; 
+            border: 3px dashed #eb5757; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            text-align: left; 
+        }
+        .challan-header { 
+            text-align: center; 
+            border-bottom: 2px dashed rgba(255,255,255,0.15); 
+            padding-bottom: 15px; 
+            margin-bottom: 15px; 
+        }
+        .challan-row { 
+            display: flex; 
+            justify-content: space-between; 
+            margin-bottom: 10px; 
+            font-size: 15px; 
+            border-bottom: 1px dotted rgba(255,255,255,0.1); 
+            padding-bottom: 5px; 
+        }
+        .image-preview { 
+            width: 80px; 
+            height: 80px; 
+            border: 2px dashed rgba(255,255,255,0.2); 
+            margin-top: 5px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            overflow: hidden; 
+            border-radius: 8px;
+            background: rgba(0,0,0,0.2);
+        }
+        .image-preview img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Filter Tab Bar for Public Groups & Matches */
+        .sport-links-bar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0 25px 0;
+            background: rgba(0,0,0,0.2);
+            padding: 6px;
+            border-radius: 10px;
+        }
+        .sport-tab {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #94a3b8;
+        }
+        .sport-tab:hover {
+            color: white;
+            background: rgba(255,255,255,0.05);
+        }
+        .sport-tab.active {
+            color: black;
+            background: #ffc107;
+        }
+
+        @media print {
+            body { background: white !important; color: black !important; background-image: none !important; }
+            .navbar, .deadline-bar, .admin-panel, button, .btn, h1:not(#viewingTeamName), p, .sport-links-bar, .no-print { display: none !important; }
+            .container { background: none !important; box-shadow: none !important; width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
+            .scout-table { border: 2px solid black !important; color: black !important; width: 100% !important; margin-top: 10px !important; }
+            .scout-table th { background: #ddd !important; color: black !important; border: 1px solid black !important; }
+            .scout-table td { border: 1px solid black !important; color: black !important; }
+            .challan-box { border: 3px dashed black !important; box-shadow: none !important; margin: 0 auto !important; background: white !important; color: black !important; }
+            .challan-row { color: black !important; border-bottom-color: black !important; }
+            #challanView, #teamDetailView { display: block !important; }
+        }
+
+#home{
+    text-decoration: none;
+    color:  white;
+}
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="navbar no-print">
+        <span onclick="goToStep(1)" class="active-nav" id="navHome"><a href="INDEX.html" id="home">HOME (اہم صفحہ)</span></a> 
+        <span onclick="showAllTeams()" id="navTeams">TEAMS (ٹیمیں)</span> 
+        <span onclick="promptAdminLogin()">👑 ADMIN PANEL</span>
+    </div>
+
+    <div id="liveDeadlineBar" class="deadline-bar date-open">
+        <span id="deadlineText">📅 Registration Last Date: Loading...</span>
+        <span id="remainingDaysBadge" style="background: rgba(0,0,0,0.3); padding: 4px 12px; border-radius: 20px; font-size: 13px;">--</span>
+    </div>
+
+    <!-- 👑 BOARD CONTROL (ADMIN MODE) -->
+    <div id="adminControlPanel" class="admin-panel hidden no-print">
+        <h2 style="color: #ffc107; margin-top:0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">👑 MASTER BOARD CONTROL</h2>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+            <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px;">
+                <label style="color: #fff; font-weight: bold; margin-bottom: 8px;">📅 Change Last Date:</label>
+                <input type="date" id="adminNewDateInput" style="margin-bottom: 10px;">
+                <button class="btn btn-blue" style="width:100%; margin:0;" onclick="saveNewDeadlineFromAdmin()">Update Deadline</button>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px;">
+                <label style="color: #fff; font-weight: bold; margin-bottom: 8px;">💰 Tournament Fees Option:</label>
+                <select id="adminFeesToggle" style="margin-bottom: 10px;" onchange="toggleFeesFields()">
+                    <option value="OFF">❌ No Fees (Free Registration)</option>
+                    <option value="ON">✅ Fees Required (Show Challan)</option>
+                </select>
+
+                <div id="adminFeesAmountDiv" class="hidden" style="margin-bottom: 10px;">
+                    <label style="color: #fff; font-size: 12px;">Enter Fees Amount (Rs):</label>
+                    <input type="number" id="adminFeesAmountInput" placeholder="e.g. 3000" style="margin-bottom: 10px;">
+                </div>
+            </div>
+        </div>
+
+        <div id="bankDetailsSection" style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; margin-bottom: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div class="form-group" style="grid-column: span 2;">
+                <label style="color: #ffc107; font-weight: bold;">Account Title Name (بینک اکاؤنٹ کا نام):</label>
+                <input type="text" id="adminAccountTitle" placeholder="e.g.MALIK SUPER LEAGUE">
+            </div>
+            <div class="form-group">
+                <label>Bank name:</label>
+                <input type="text" id="adminBankName" placeholder="e.g. Habib Bank Limited">
+            </div>
+            <div class="form-group">
+                <label>Bank Account Number / IBAN:</label>
+                <input type="text" id="adminAccNumber" placeholder="PK12 HABB 0123 4567 8901">
+            </div>
+            <div class="form-group">
+                <label>JazzCash Mobile Number:</label>
+                <input type="text" id="adminJazzNumber" placeholder="e.g. 03001234567">
+            </div>
+            <div class="form-group">
+                <label>EasyPaisa Mobile Number:</label>
+                <input type="text" id="adminEasyNumber" placeholder="e.g. 03451234567">
+            </div>
+            <div style="grid-column: span 2; text-align: right;">
+                <button class="btn btn-orange" style="width:100%; margin: 5px 0 0 0;" onclick="saveAllAdminDetails()">💾 Save Fees & Account Settings</button>
+            </div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <h4 style="color: #ffc107; margin-top: 0; margin-bottom: 10px;">🛡️ Assign Teams to Groups (A, B, C, D)</h4>
+            
+            <div style="margin-bottom: 10px;">
+                <label>Choose Sport:</label>
+                <select id="adminGroupSportSelect" style="margin-bottom: 10px;" onchange="populateAdminDropdowns()">
+                    <option value="cricket">Cricket</option>
+                    <option value="football">Football</option>
+                    <option value="hockey">Hockey</option>
+                    <option value="snooker">Snooker</option>
+                </select>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                <div>
+                    <label>Select Team:</label>
+                    <select id="adminSelectTeamForGroup"></select>
+                </div>
+                <div>
+                    <label>Select Group:</label>
+                    <select id="adminSelectGroupLetter">
+                        <option value="A">Group A</option>
+                        <option value="B">Group B</option>
+                        <option value="C">Group C</option>
+                        <option value="D">Group D</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="visibility: hidden;">Action</label>
+                    <button class="btn btn-green btn-sm" style="width: 100%; height: 38px; margin: 0; display: block;" onclick="assignTeamToGroup()">Assign Team</button>
+                </div>
+            </div>
+            
+            <div class="groups-container" id="adminGroupsDashboard"></div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; margin-top: 15px;">
+            <h4 style="color: #ffc107; margin-top: 0; margin-bottom: 10px;">📅 Schedule New Match</h4>
+            
+            <div style="margin-bottom: 10px;">
+                <label>Match Sport:</label>
+                <select id="adminMatchSportSelect" style="margin-bottom: 10px;" onchange="populateAdminDropdowns()">
+                    <option value="cricket">Cricket</option>
+                    <option value="football">Football</option>
+                    <option value="hockey">Hockey</option>
+                    <option value="snooker">Snooker</option>
+                </select>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                <div>
+                    <label>Team 1 Name:</label>
+                    <select id="matchTeam1"></select>
+                </div>
+                <div>
+                    <label>Team 2 Name:</label>
+                    <select id="matchTeam2"></select>
+                </div>
+                <div>
+                    <label>Match Date & Time:</label>
+                    <input type="datetime-local" id="matchDateTime">
+                </div>
+                <div>
+                    <label>Venue (Ground/Pitch):</label>
+                    <input type="text" id="matchVenue" placeholder="e.g. Malik Sports Ground">
+                </div>
+            </div>
+            <button class="btn btn-green" onclick="saveMatchFromAdmin()">Add Match to Schedule</button>
+
+            <h4 style="color: #17a2b8; margin-top: 15px; margin-bottom: 5px;">Current Matches List</h4>
+            <table class="admin-table">
+                <thead>
+                    <tr><th>Match</th><th>Sport</th><th>Date/Time</th><th>Venue</th><th>Action</th></tr>
+                </thead>
+                <tbody id="adminMatchesTableBody"></tbody>
+            </table>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; margin-top: 15px;">
+            <h4 style="color: #17a2b8; margin-top: 0; margin-bottom: 10px;">⚡ Quick Team Editor (All Registered Teams)</h4>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Team Name</th>
+                        <th>Sport</th>
+                        <th>Saved Players</th>
+                        <th>Password</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="adminTeamsTableBody"></tbody>
+            </table>
+        </div>
+        <br>
+        <button class="btn btn-red btn-sm" onclick="logoutAdmin()">Close Admin Panel</button>
+    </div>
+
+    <!-- STEP 1: HOME PAGE -->
+    <div id="step1">
+        <h1 style="font-size: 32px; font-weight: 850; margin: 0 0 5px 0; color: #ffc107; font-family: 'Space Grotesk', ssystem-ui;">MALIK SPORTS COUNCIL</h1>
+        <p style="color: #94a3b8; font-size: 14px; margin-top: 0; margin-bottom: 25px;">SELECT TOURNAMENT CATEGORY TO PROCEED & REGISTER</p>
+        
+        <div class="sports-grid">
+            <div class="sport-card cricket" onclick="selectSport('cricket')">
+                <span class="sport-icon">🏏</span>
+                <span>CRICKET</span>
+            </div>
+            <div class="sport-card football" onclick="selectSport('football')">
+                <span class="sport-icon">⚽</span>
+                <span>FOOTBALL</span>
+            </div>
+            <div class="sport-card hockey" onclick="selectSport('hockey')">
+                <span class="sport-icon">🏑</span>
+                <span>HOCKEY</span>
+            </div>
+            <div class="sport-card snooker" onclick="selectSport('snooker')">
+                <span class="sport-icon">🎱</span>
+                <span>SNOOKER</span>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px;">
+            <h2 id="group1">🛡️ TOURNAMENT GROUPS (A, B, C, D)</h2>
+            
+            <!-- Interactive Sport Filtering Tab bar for Group Dashboard -->
+            <div class="sport-links-bar">
+                <span class="sport-tab active" id="groupTabCricket" onclick="togglePublicDashboardTab('cricket')">🏏 Cricket</span>
+                <span class="sport-tab" id="groupTabFootball" onclick="togglePublicDashboardTab('football')">⚽ Football</span>
+                <span class="sport-tab" id="groupTabHockey" onclick="togglePublicDashboardTab('hockey')">🏑 Hockey</span>
+                <span class="sport-tab" id="groupTabSnooker" onclick="togglePublicDashboardTab('snooker')">🎱 Snooker</span>
+            </div>
+
+            <div class="groups-container" id="publicGroupsDashboard"></div>
+        </div>
+
+        <div style="margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px;">
+            <h2>📅 MATCH SCHEDULE & FIXTURES</h2>
+            
+            <div class="sport-links-bar">
+                <span class="sport-tab active" id="matchTabCricket" onclick="togglePublicMatchTab('cricket')">🏏 Cricket</span>
+                <span class="sport-tab" id="matchTabFootball" onclick="togglePublicMatchTab('football')">⚽ Football</span>
+                <span class="sport-tab" id="matchTabHockey" onclick="togglePublicMatchTab('hockey')">🏑 Hockey</span>
+                <span class="sport-tab" id="matchTabSnooker" onclick="togglePublicMatchTab('snooker')">🎱 Snooker</span>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table class="scout-table" style="max-width: 100%; margin: auto;">
+                    <thead>
+                        <tr>
+                            <th>Match Teams</th>
+                            <th>Date & Time</th>
+                            <th>Venue / Ground</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userMatchesTableBody"></tbody>
+                </table>
+            </div>
+
+            <!-- Auto Schedule Generator -->
+            <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; margin-top: 20px; border: 1.5px solid #ffc107; text-align: left;">
+                <h4 style="color: #ffc60; margin-top: 0; font-size: 16px;">⚡ Auto-Generate Bracket Schedule Automatically</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1.5fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <div>
+                        <label>Sport Category:</label>
+                        <select id="autoSportType" style="color:white; width: 100%;">
+                            <option value="cricket">Cricket</option>
+                            <option value="football">Football</option>
+                            <option value="hockey">Hockey</option>
+                            <option value="snooker">Snooker</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Kickoff Date & Time:</label>
+                        <input type="datetime-local" id="autoStartDate" style="color:white; width: 100%;">
+                    </div>
+                    <div>
+                        <label>Matches Per Day:</label>
+                        <input type="number" id="autoMatchesPerDay" value="2" style="color:white; width: 100%;">
+                    </div>
+                </div>
+                <button class="btn btn-green" onclick="generateAutoSchedule()" style="width: 100%; margin:0; py: 12px;">Generate Schedule Automatically</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 3: LOGIN TEAM -->
+    <div id="step3" class="hidden">
+        <h2 id="registerSportHeader">Register / Manage Your Cricket Team</h2>
+        <p style="color: #94a3b8; font-size: 13px; margin-bottom: 25px;">Enter your squad credentials below. Enter secure password to save records correctly.</p>
+        <div style="max-width: 400px; margin: auto;">
+            <div class="form-group">
+                <label>Team Name (ٹیم کا نام)</label>
+                <input type="text" id="teamNameInput" placeholder="e.g. MALIK SPORTS COUNCIL">
+            </div>
+            <div class="form-group">
+                <label>Create / Enter Team Password</label>
+                <input type="password" id="securityPinInput" placeholder="Set Password to Secure Squad">
+            </div>
+            <button class="btn btn-blue" style="width: 100%;" onclick="verifyAndOpenTeam()">Open Squad Grid</button>
+            <button class="btn btn-gray" style="width: 100%; margin-top: 10px;" onclick="goToStep(1)">Back</button>
+        </div>
+    </div>
+
+    <!-- STEP 5: SQUAD BUILDER RENDER GRID -->
+    <div id="step5" class="hidden">
+        <h2 id="currentRegTeamName">Team Name</h2>
+        <p id="squadRegSubTitle">Enter details for 15 scouted players</p>
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: rgba(0,0,0,0.2); padding: 10px 15px; border-radius: 8px;">
+            <span style="font-weight: bold; font-size:14px; text-transform: uppercase;">Completeness Index</span>
+            <span id="squadProgressBadge" style="font-weight: bold; background: #007bff; padding: 4px 10px; border-radius: 6px; font-size: 12px;">0/15 Players</span>
+        </div>
+
+        <div class="squad-grid" id="registrationGrid"></div>
+        <br>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+            <button class="btn btn-gray" onclick="goToStep(1)">Exit & Home</button>
+            <button class="btn btn-orange" onclick="autoFillDummyPlayers()">⚡ Auto-Fill Players</button>
+            <button class="btn btn-green" id="submitTeamBtn" onclick="finalizeTeam()">Submit & Lock Squad</button>
+        </div>
+    </div>
+
+    <!-- STEP 6: ENTRY PLAYER FORM -->
+    <div id="step6" class="hidden">
+        <h2 id="playerFormTitle">Player Detail Roster</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: left;">
+            <div class="form-group"><label>Name</label><input type="text" id="pName"></div>
+            <div class="form-group"><label>Cast</label><input type="text" id="pCast"></div>
+            <div class="form-group"><label>Father Name</label><input type="text" id="pFather"></div>
+            <div class="form-group">
+                <label>CNIC / Form-B (<span style="color:#f87171;">Distinct Check *</span>)</label>
+                <input type="text" id="pCnic" placeholder="e.g. 34601-1234567-8">
+            </div>
+            <div class="form-group"><label>District</label><input type="text" id="pDist" value="MALIK SPORTS COUNCIL"></div>
+            <div class="form-group"><label>City</label><input type="text" id="pCity" value="MALIK SPORTS COUNCIL"></div>
+            <div class="form-group"><label id="playingRoleLabel">Role</label>
+                <select id="pRole"></select>
+            </div>
+            <div class="form-group"><label>Shirt Size</label>
+                <select id="pSize"><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select>
+            </div>
+            
+            <div class="form-group">
+                <label>Shirt Number (شرٹ نمبر)</label>
+                <input type="text" id="pShirtNo" placeholder="e.g. 10 or 07">
+            </div>
+
+            <div class="form-group">
+                <label>Photo (Max 150KB)</label>
+                <input type="file" accept="image/*" onchange="handleImage(this)">
+                <div class="image-preview" id="pPrev"></div>
+            </div>
+            <div class="form-group" style="grid-column: span 2;"><label>Address</label><textarea id="pAddr"></textarea></div>
+        </div>
+        <button class="btn btn-green" onclick="savePlayerData()">Save Player</button>
+        <button class="btn btn-gray" onclick="goToStep(5)">Cancel</button>
+    </div>
+
+    <!-- CHALLAN VIEW SECTION -->
+    <div id="challanView" class="hidden">
+        <div class="challan-box" id="printArea">
+            <div class="challan-header">
+                <h2 style="margin:0; color:white; font-family:'Space Grotesk'; font-size: 20px;">🏆 DISTRICT SPORTS CHALLAN</h2>
+                <small style="color:#ffc107; font-weight:bold; letter-spacing: 0.5px;">OFFICIAL TOURNAMENT SECURITY RECEIPT</small>
+            </div>
+            <div class="challan-row"><span><b>Challan Ref No:</b></span><span id="chNo">#1024</span></div>
+            <div class="challan-row"><span><b>Team Name:</b></span><span id="chTeam" style="text-transform:uppercase; font-weight:bold; color: #ffc107;">--</span></div>
+            <div class="challan-row"><span><b>Sport Category:</b></span><span id="chSport" style="text-transform:uppercase; font-weight:bold;">--</span></div>
+            <div class="challan-row"><span><b>Total Roster Capacity:</b></span><span>15 Players Registered 🔒</span></div>
+            <div class="challan-row"><span><b>Status:</b></span><span style="color:#4ade80; font-weight:bold;">Verifiably Sent Online ✅</span></div>
+            
+            <!-- Bank Details Displays inside Challan -->
+            <div style="background: rgba(0,0,0,0.5); padding: 12px; border-radius: 8px; margin-top: 15px; border: 1.5px dashed #dc3545; font-size: 13px;">
+                <h4 style="margin:0 0 8px 0; color: #ffc107; text-align: center; font-size:13px; font-weight:800;">💰 DIRECT PAYMENT CHANNELS</h4>
+                <div class="challan-row"><span style="font-size:12px; color:#94a3b8;"><b>Account Title:</b></span><span id="chTitle" style="font-size:12px; color:white;">--</span></div>
+                <div class="challan-row"><span style="font-size:12px; color:#94a3b8;"><b>Bank Name:</b></span><span id="chBank" style="font-size:12px; color:white;">--</span></div>
+                <div class="challan-row"><span style="font-size:12px; color:#94a3b8;"><b>IBAN / Bank Acc Number:</b></span><span id="chAcc" style="font-size:11px; color:#ffc107; font-family: monospace;">--</span></div>
+                <div class="challan-row"><span style="font-size:12px; color:#94a3b8;"><b>JazzCash Wallet:</b></span><span id="chJazz" style="font-size:12px; color:white; font-family: monospace;">--</span></div>
+                <div class="challan-row"><span style="font-size:12px; color:#94a3b8;"><b>EasyPaisa Wallet:</b></span><span id="chEasy" style="font-size:12px; color:white; font-family: monospace;">--</span></div>
+            </div>
+
+            <div class="challan-row" style="border-top:2px dashed #ffc107; padding-top:10px; margin-top:15px; font-size:18px;">
+                <span><b style="color:#ffc107;">Required Fee Due:</b></span>
+                <span><b id="chAmount" style="color:#4ade80;">Rs. 0</b></span>
+            </div>
+            <p style="font-size:10px; color:#94a3b8; text-align:center; margin-top:20px; font-weight: 500;">* Kindly pay the due entry amount through the listed gateway channels to lock match schedule bookings.</p>
+        </div>
+        <button class="btn btn-green" onclick="window.print()">🖨️ Print Slip / Download PDF</button>
+        <button class="btn btn-blue" onclick="showAllTeams()">Go to Teams View</button>
+    </div>
+
+    <!-- READ ONLY TEAMS BOARD -->
+    <div id="scoutView" class="hidden">
+        <h1 style="font-size: 24px; color: #ffc107; margin:0 0 5px 0;">REGISTERED TOURNAMENT BOARDS</h1>
+        <p style="color:#94a3b8; font-size: 13px; margin: 0 0 25px 0;">Manage and inspect official roster configurations of teams across MALIK SPORTS COUNCIL.</p>
+        
+        <!-- Tab selector for scout list -->
+        <div class="sport-links-bar" style="margin-bottom: 20px;">
+            <span class="sport-tab active" id="listTabCricket" onclick="togglePublicListTab('cricket')">🏏 Cricket</span>
+            <span class="sport-tab" id="listTabFootball" onclick="togglePublicListTab('football')">⚽ Football</span>
+            <span class="sport-tab" id="listTabHockey" onclick="togglePublicListTab('hockey')">🏑 Hockey</span>
+            <span class="sport-tab" id="listTabSnooker" onclick="togglePublicListTab('snooker')">🎱 Snooker</span>
+        </div>
+
+        <div class="teams-list" id="teamsListContainer"></div>
+    </div>
+
+    <!-- DETAIL SQUAD ROSTER SHOW -->
+    <div id="teamDetailView" class="hidden">
+        <h1 id="viewingTeamName" style="font-size: 24px; margin-bottom: 2px;">Team Details</h1>
+        <p style="color:#ffc107; font-size:13px; margin-top:0; margin-bottom: 20px;">⚠️ Security Mode: Verified Match Roster Sheet</p>
+        <div style="overflow-x: auto;">
+            <table class="scout-table">
+                <thead>
+                    <tr>
+                        <th>Photo</th><th>Name</th><th>Cast</th><th>Role</th><th>City</th><th>Shirt Size</th><th>Shirt No</th>
+                    </tr>
+                </thead>
+                <tbody id="squadTableBody"></tbody>
+            </table>
+        </div>
+        <br>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+            <button class="btn btn-gray" onclick="showAllTeams()">Back to Teams</button>
+            <button class="btn btn-green" onclick="window.print()">🖨️ Print This Squad List</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const GOOGLE_SHEET_URL = "YOUR_GOOGLE_SCRIPT_URL_HERE"; 
+    const CREATOR_ADMIN_PASSWORD = "MALIK786";  
+    
+    // Core parameters state
+    let currentSavedDeadline = localStorage.getItem('tournamentDeadlineDate') || "2026-07-25";
+    let feesStatus = localStorage.getItem('tournamentFeesStatus') || "ON";
+    let feesAmount = localStorage.getItem('tournamentFeesAmount') || "3500";
+
+    // Receivables credentials state
+    let accountTitle = localStorage.getItem('accountTitle') || "MALIK SPORTS COUNCIL";
+    let bankName = localStorage.getItem('bankName') || "Habib Bank Limited (HBL)";
+    let accountNumber = localStorage.getItem('accountNumber') || "PK23HABB00123456789012";
+    let jazzCash = localStorage.getItem('jazzCash') || "03001234567";
+    let easyPaisa = localStorage.getItem('easyPaisa') || "03457654321";
+
+    let allTeams = JSON.parse(localStorage.getItem('globalTeamsList')) || getPreloadedTeams();
+    let allMatches = JSON.parse(localStorage.getItem('globalMatchesList')) || getPreloadedMatches();
+    let teamGroups = JSON.parse(localStorage.getItem('globalTeamGroups')) || getPreloadedGroups();
+    
+    let currentSport = "cricket"; // active sport chosen
+    let currentTeamData = { name: "", password: "", sport: "cricket", players: Array(15).fill(null) };
+    let tempPlayerIndex = null;
+    let tempImageData = "";
+    let isAdminLoggedIn = false;
+
+    // Filter pointers
+    let activePublicTabGroups = "cricket";
+    let activePublicTabMatches = "cricket";
+    let activePublicTabList = "cricket";
+
+    window.onload = function() {
+        updateDeadlineUI();
+        togglePublicDashboardTab('cricket');
+        togglePublicMatchTab('cricket');
+        togglePublicListTab('cricket');
+        
+        // Populate inputs values
+        document.getElementById('adminNewDateInput').value = currentSavedDeadline;
+        document.getElementById('adminFeesToggle').value = feesStatus;
+        document.getElementById('adminFeesAmountInput').value = feesAmount;
+        document.getElementById('adminAccountTitle').value = accountTitle;
+        document.getElementById('adminBankName').value = bankName;
+        document.getElementById('adminAccNumber').value = accountNumber;
+        document.getElementById('adminJazzNumber').value = jazzCash;
+        document.getElementById('adminEasyNumber').value = easyPaisa;
+
+        toggleFeesFields();
+    }
+
+    function updateDeadlineUI() {
+        let todayStr = new Date().toISOString().split('T')[0];
+        let today = new Date(todayStr);
+        let deadline = new Date(currentSavedDeadline);
+        let dateParts = currentSavedDeadline.split('-');
+        let formattedDeadline = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+
+        let bar = document.getElementById('liveDeadlineBar');
+        let txt = document.getElementById('deadlineText');
+        let badge = document.getElementById('remainingDaysBadge');
+
+        if (todayStr > currentSavedDeadline) {
+            bar.className = "deadline-bar date-closed";
+            txt.innerHTML = `⚠️ Registration Official Closed! (Date was: ${formattedDeadline})`;
+            badge.innerHTML = "Closed 🔒";
+        } else {
+            bar.className = "deadline-bar date-open";
+            txt.innerHTML = `📅 registration Last Date: ${formattedDeadline}`;
+            let timeDiff = deadline.getTime() - today.getTime();
+            let daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+            badge.innerHTML = daysDiff <= 0 ? "Last day left! ⏱️" : `${daysDiff} Days Remaining ⏳`;
+        }
+    }
+
+    // Role definitions for sport types
+    const SPORT_PLAYING_ROLES = {
+        cricket: ['Batsman', 'Bowler', 'All-Rounder', 'Wicketkeeper-Batsman'],
+        football: ['Goalkeeper', 'Defender', 'Midfielder', 'Forward'],
+        hockey: ['Goalkeeper', 'Defender', 'Midfielder', 'Attacker'],
+        snooker: ['Single Cueist', 'Double Specialist', 'Team Captain', 'Break Maker']
+    };
+
+    function selectSport(sport) {
+        currentSport = sport;
+        
+        // Dynamically update UI theme variables based on sport selection
+        let root = document.querySelector(':root');
+        if (sport === 'cricket') {
+            root.style.setProperty('--accent-color', 'var(--card-cricket)');
+        } else if (sport === 'football') {
+            root.style.setProperty('--accent-color', 'var(--card-football)');
+        } else if (sport === 'hockey') {
+            root.style.setProperty('--accent-color', 'var(--card-hockey)');
+        } else if (sport === 'snooker') {
+            root.style.setProperty('--accent-color', 'var(--card-snooker)');
+        }
+
+        // Setup Player role dropdown options immediately
+        let roleDropdown = document.getElementById('pRole');
+        roleDropdown.innerHTML = "";
+        SPORT_PLAYING_ROLES[sport].forEach(r => {
+            let opt = document.createElement('option');
+            opt.innerText = r;
+            roleDropdown.appendChild(opt);
+        });
+
+        // Set Step 3 visual header
+        document.getElementById('registerSportHeader').innerText = `Register / Manage Your ${sport.toUpperCase()} Team`;
+        
+        goToStep(3);
+    }
+
+    function togglePublicDashboardTab(sport) {
+        activePublicTabGroups = sport;
+        document.querySelectorAll('#step1 .sport-links-bar:first-of-type .sport-tab').forEach(t => t.classList.remove('active'));
+        
+        let tabId = "groupTab" + sport.charAt(0).toUpperCase() + sport.slice(1);
+        let tabElem = document.getElementById(tabId);
+        if (tabElem) tabElem.classList.add('active');
+
+        renderPublicGroupsDashboard();
+    }
+
+    function togglePublicMatchTab(sport) {
+        activePublicTabMatches = sport;
+        document.querySelectorAll('#step1 .sport-links-bar:nth-of-type(2) .sport-tab').forEach(t => t.classList.remove('active'));
+        
+        let tabId = "matchTab" + sport.charAt(0).toUpperCase() + sport.slice(1);
+        let tabElem = document.getElementById(tabId);
+        if (tabElem) tabElem.classList.add('active');
+
+        renderUserMatchesTable();
+    }
+
+    function togglePublicListTab(sport) {
+        activePublicTabList = sport;
+        document.querySelectorAll('#scoutView .sport-links-bar .sport-tab').forEach(t => t.classList.remove('active'));
+        
+        let tabId = "listTab" + sport.charAt(0).toUpperCase() + sport.slice(1);
+        let tabElem = document.getElementById(tabId);
+        if (tabElem) tabElem.classList.add('active');
+
+        renderScoutTeamsList();
+    }
+
+    function promptAdminLogin() {
+        let code = prompt("Enter Master Admin Code:");
+        if (code === CREATOR_ADMIN_PASSWORD) {
+            isAdminLoggedIn = true;
+            document.getElementById('adminControlPanel').classList.remove('hidden');
+            renderAdminTeamsTable();
+            renderAdminMatchesTable(); 
+            renderAdminGroupsDashboard();
+            populateAdminDropdowns();
+            alert("👑 Access Authorized! admin Control Dashboard Activated!");
+        } else {
+            alert("❌ Incorrect Password!");
+        }
+    }
+
+    function populateAdminDropdowns() {
+        // Group assignment dropdown
+        const groupSport = document.getElementById('adminGroupSportSelect').value;
+        const groupTeamSelect = document.getElementById('adminSelectTeamForGroup');
+        
+        // Find registered teams under current group sport selection
+        let filtTeams = allTeams.filter(t => t.sport === groupSport);
+        let optionsHtml = filtTeams.length === 0 ? "<option value=''>No teams registered in this sport</option>" : "";
+        filtTeams.forEach(t => {
+            optionsHtml += `<option value="${t.name}">${t.name}</option>`;
+        });
+        groupTeamSelect.innerHTML = optionsHtml;
+
+        // Schedule fixture teams dropdown matches
+        const matchSport = document.getElementById('adminMatchSportSelect').value;
+        const matchT1 = document.getElementById('matchTeam1');
+        const matchT2 = document.getElementById('matchTeam2');
+
+        let matchFiltTeams = allTeams.filter(t => t.sport === matchSport);
+        let matchOptions = matchFiltTeams.length === 0 ? "<option value=''>No teams registered in this sport</option>" : "";
+        matchFiltTeams.forEach(t => {
+            matchOptions += `<option value="${t.name}">${t.name}</option>`;
+        });
+        matchT1.innerHTML = matchOptions;
+        matchT2.innerHTML = matchOptions;
+    }
+
+    function assignTeamToGroup() {
+        let groupSport = document.getElementById('adminGroupSportSelect').value;
+        let selectedTeam = document.getElementById('adminSelectTeamForGroup').value;
+        let selectedGroup = document.getElementById('adminSelectGroupLetter').value;
+        
+        if(!selectedTeam || selectedTeam.includes("No teams")) return alert("Pehle registered Team select karein!");
+        
+        // Remove team from other groups under same sport
+        ['A','B','C','D'].forEach(g => {
+            if (teamGroups[groupSport] && teamGroups[groupSport][g]) {
+                teamGroups[groupSport][g] = teamGroups[groupSport][g].filter(t => t !== selectedTeam);
+            }
+        });
+        
+        // Ensure structure exists
+        if (!teamGroups[groupSport]) {
+            teamGroups[groupSport] = { A: [], B: [], C: [], D: [] };
+        }
+        
+        teamGroups[groupSport][selectedGroup].push(selectedTeam);
+        localStorage.setItem('globalTeamGroups', JSON.stringify(teamGroups));
+        
+        renderAdminGroupsDashboard();
+        renderPublicGroupsDashboard();
+        alert(`🏆 ${selectedTeam} has been successfully assigned to Group ${selectedGroup}!`);
+    }
+
+    function removeTeamFromGroup(sportKey, groupCode, teamName) {
+        if (teamGroups[sportKey] && teamGroups[sportKey][groupCode]) {
+            teamGroups[sportKey][groupCode] = teamGroups[sportKey][groupCode].filter(t => t !== teamName);
+            localStorage.setItem('globalTeamGroups', JSON.stringify(teamGroups));
+            renderAdminGroupsDashboard();
+            renderPublicGroupsDashboard();
+        }
+    }
+
+    function renderAdminGroupsDashboard() {
+        const groupSport = document.getElementById('adminGroupSportSelect').value;
+        const container = document.getElementById('adminGroupsDashboard');
+        container.innerHTML = "";
+        
+        let targetGrp = teamGroups[groupSport] || { A: [], B: [], C: [], D: [] };
+
+        ['A', 'B', 'C', 'D'].forEach(letter => {
+            const box = document.createElement('div');
+            box.className = "group-box";
+            
+            let listItemsHtml = "";
+            let teamsInGroup = targetGrp[letter] || [];
+            
+            if(teamsInGroup.length === 0) {
+                listItemsHtml = "<p style='font-size:12px; color:#aaa; margin-left:15px; margin-top:5px;'>No teams assigned</p>";
+            } else {
+                listItemsHtml = "<ul>";
+                teamsInGroup.forEach(tName => {
+                    listItemsHtml += `<li style="color:#fff; font-size:12.5px; margin-bottom:6px;">🏏 ${tName} <span style='color:#f87171; cursor:pointer; margin-left:8px; font-weight:800;' onclick="removeTeamFromGroup('${groupSport}', '${letter}', '${tName}')">✕</span></li>`;
+                });
+                listItemsHtml += "</ul>";
+            }
+            
+            box.innerHTML = `<h3>GROUP ${letter} <small style='font-size:11px; color:#28a745;'>(${teamsInGroup.length} Teams)</small></h3>${listItemsHtml}`;
+            container.appendChild(box);
+        });
+    }
+
+    function renderPublicGroupsDashboard() {
+        const container = document.getElementById('publicGroupsDashboard');
+        container.innerHTML = "";
+        
+        let targetGrp = teamGroups[activePublicTabGroups] || { A: [], B: [], C: [], D: [] };
+
+        ['A', 'B', 'C', 'D'].forEach(letter => {
+            const box = document.createElement('div');
+            box.className = "group-box";
+            
+            let listItemsHtml = "";
+            let teamsInGroup = targetGrp[letter] || [];
+            
+            if(teamsInGroup.length === 0) {
+                listItemsHtml = "<p style='font-size:11px; color:#94a3b8; margin-left:15px; margin-top:5px;'>Empty bracket</p>";
+            } else {
+                listItemsHtml = "<ul>";
+                teamsInGroup.forEach(tName => {
+                    listItemsHtml += `<li style="color:#f1f5f9; font-size:12.5px; margin-bottom:5px;">🛡️ ${tName}</li>`;
+                });
+                listItemsHtml += "</ul>";
+            }
+            
+            box.innerHTML = `<h3>GROUP ${letter} <small style='font-size:11px; color:#ffc107;'>(${teamsInGroup.length} Teams)</small></h3>${listItemsHtml}`;
+            container.appendChild(box);
+        });
+    }
+
+    function toggleFeesFields() {
+        let val = document.getElementById('adminFeesToggle').value;
+        document.getElementById('adminFeesAmountDiv').classList[val === "ON" ? 'remove' : 'add']('hidden');
+    }
+
+    function saveAllAdminDetails() {
+        accountTitle = document.getElementById('adminAccountTitle').value.trim();
+        bankName = document.getElementById('adminBankName').value.trim();
+        accountNumber = document.getElementById('adminAccNumber').value.trim();
+        jazzCash = document.getElementById('adminJazzNumber').value.trim();
+        easyPaisa = document.getElementById('adminEasyNumber').value.trim();
+        feesStatus = document.getElementById('adminFeesToggle').value;
+        feesAmount = document.getElementById('adminFeesAmountInput').value || "0";
+
+        localStorage.setItem("accountTitle", accountTitle);
+        localStorage.setItem("bankName", bankName);
+        localStorage.setItem("accountNumber", accountNumber);
+        localStorage.setItem("jazzCash", jazzCash);
+        localStorage.setItem("easyPaisa", easyPaisa);
+        localStorage.setItem("tournamentFeesStatus", feesStatus);
+        localStorage.setItem("tournamentFeesAmount", feesAmount);
+        
+        alert("🚀 Accounts & Entry Gate Fees configurations successfully updated!");
+    }
+
+    function renderAdminTeamsTable() {
+        const tbody = document.getElementById('adminTeamsTableBody');
+        tbody.innerHTML = allTeams.length === 0 ? "<tr><td colspan='5'>No teams registered yet.</td></tr>" : "";
+        allTeams.forEach((team, index) => {
+            let count = team.players ? team.players.filter(p => p !== null).length : 0;
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td><b>${team.name}</b></td><td style='text-transform:uppercase;'>${team.sport}</td><td>${count}/15</td><td><code>${team.password}</code></td><td>
+                <button class="btn btn-green btn-sm" onclick="adminDirectEditTeam(${index})">✏️ Edit</button>
+                <button class="btn btn-red btn-sm" onclick="adminDeleteTeam(${index})">✕ Delete</button>
+            </td>`;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function renderAdminMatchesTable() {
+        const tbody = document.getElementById('adminMatchesTableBody');
+        tbody.innerHTML = allMatches.length === 0 ? "<tr><td colspan='5'>No matches scheduled yet.</td></tr>" : "";
+        allMatches.forEach((match, index) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td><b>${match.t1} vs ${match.t2}</b></td><td style='text-transform:uppercase; font-weight:bold;'>${match.sport}</td><td>${match.date.replace('T', ' ')}</td><td>${match.venue}</td><td><button class="btn btn-red btn-sm" style='margin:0;' onclick="deleteMatch(${index})">✕</button></td>`;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function renderUserMatchesTable() {
+        const tbody = document.getElementById('userMatchesTableBody');
+        if(!tbody) return;
+        
+        // Filter matches based on selected category tab
+        let filtered = allMatches.filter(m => m.sport === activePublicTabMatches);
+
+        tbody.innerHTML = filtered.length === 0 ? `<tr><td colspan='3' style='text-align:center; padding:15px; color:#94a3b8;'>No upcoming scheduled fixtures for ${activePublicTabMatches.toUpperCase()} yet.</td></tr>` : "";
+        filtered.forEach(match => {
+            const tr = document.createElement('tr');
+            let formattedDate = match.date.replace('T', ' '); 
+            tr.innerHTML = `<td style='font-weight:bold; padding:12px;'>🔥 ${match.t1} <span style='color:#f87171;'>VS</span> ${match.t2}</td><td style='padding:12px;'>⏰ ${formattedDate}</td><td style='padding:12px;'>📍 ${match.venue}</td>`;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function saveMatchFromAdmin() {
+        let sport = document.getElementById('adminMatchSportSelect').value;
+        let t1 = document.getElementById('matchTeam1').value;
+        let t2 = document.getElementById('matchTeam2').value;
+        let date = document.getElementById('matchDateTime').value;
+        let venue = document.getElementById('matchVenue').value.trim();
+
+        if(!t1 || !t2 || !date || !venue || t1.includes("No teams")) return alert("Kindly correct matching details select karein!");
+        if(t1 === t2) return alert("Double selection invalid! Same teams aapas mein nahi khel sakteen.");
+
+        allMatches.push({ sport: sport, t1: t1, t2: t2, date: date, venue: venue });
+        localStorage.setItem('globalMatchesList', JSON.stringify(allMatches));
+        
+        document.getElementById('matchDateTime').value = "";
+        document.getElementById('matchVenue').value = "";
+
+        renderAdminMatchesTable();
+        renderUserMatchesTable();
+        alert("🎯 Match schedule added successfully!");
+    }
+
+    function deleteMatch(index) {
+        if(confirm("Are you sure you want to delete this match from fixtures?")) {
+            allMatches.splice(index, 1);
+            localStorage.setItem('globalMatchesList', JSON.stringify(allMatches));
+            renderAdminMatchesTable();
+            renderUserMatchesTable();
+        }
+    }
+
+    function generateAutoSchedule() {
+        let sport = document.getElementById('autoSportType').value;
+        let startInput = document.getElementById('autoStartDate').value;
+        let perDay = parseInt(document.getElementById('autoMatchesPerDay').value) || 2;
+        if(!startInput) return alert("Pehle kickoff date parameters setup karein!");
+
+        let generatedMatches = [];
+        let currentMatchTime = new Date(startInput);
+        let matchesScheduledToday = 0;
+
+        // Retrieve teams of this sport category
+        let sportTeams = allTeams.filter(t => t.sport === sport);
+
+        let pairings = [];
+        // Round Robin schedule pairs
+        for(let i=0; i<sportTeams.length; i++) {
+            for(let j=i+1; j<sportTeams.length; j++) {
+                pairings.push({t1: sportTeams[i].name, t2: sportTeams[j].name});
+            }
+        }
+
+        if(pairings.length === 0) return alert(`Schedules generator require at least 2 registered teams in ${sport.toUpperCase()} category!`);
+
+        pairings.forEach((pairing, idx) => {
+            if(idx > 0) {
+                if(matchesScheduledToday >= perDay) {
+                    currentMatchTime.setDate(currentMatchTime.getDate() + 1);
+                    let initialTime = new Date(startInput);
+                    currentMatchTime.setHours(initialTime.getHours(), initialTime.getMinutes(), 0, 0);
+                    matchesScheduledToday = 0;
+                } else {
+                    currentMatchTime.setHours(currentMatchTime.getHours() + 3);
+                }
+            }
+            generatedMatches.push({
+                sport: sport,
+                t1: pairing.t1,
+                t2: pairing.t2,
+                date: currentMatchTime.toISOString().slice(0,16),
+                venue: 'Municipal Stadium Sukkur'
+            });
+            matchesScheduledToday++;
+        });
+
+        allMatches = allMatches.concat(generatedMatches);
+        localStorage.setItem('globalMatchesList', JSON.stringify(allMatches));
+        renderUserMatchesTable();
+        alert(`⚡ Round-Robin bracket match fixtures successfully generated for ${sport.toUpperCase()} Category!`);
+    }
+
+    function adminDirectEditTeam(index) {
+        let team = allTeams[index];
+        currentSport = team.sport;
+        currentTeamData = JSON.parse(JSON.stringify(team));
+        
+        // Select sport theme on admin direct override
+        selectSport(team.sport);
+
+        document.getElementById('currentRegTeamName').innerText = team.name.toUpperCase() + " (ADMIN MODE)";
+        renderRegistrationGrid();
+        goToStep(5);
+    }
+
+    function adminDeleteTeam(index) {
+        if(confirm(`⚠️ Confirm permanently deleting "${allTeams[index].name}"? This operation cannot be undone.`)) {
+            allTeams.splice(index, 1);
+            localStorage.setItem('globalTeamsList', JSON.stringify(allTeams));
+            renderAdminTeamsTable();
+            populateAdminDropdowns();
+        }
+    }
+
+    function saveNewDeadlineFromAdmin() {
+        let newDate = document.getElementById('adminNewDateInput').value;
+        if(!newDate) return alert("Select date!");
+        currentSavedDeadline = newDate;
+        localStorage.setItem('tournamentDeadlineDate', newDate);
+        updateDeadlineUI();
+        alert("🎯 Registration Deadline Successfully Updated!");
+    }
+
+    function logoutAdmin() {
+        isAdminLoggedIn = false;
+        document.getElementById('adminControlPanel').classList.add('hidden');
+    }
+
+    function goToStep(step) {
+        document.querySelectorAll('.container > div:not(.navbar):not(.deadline-bar):not(.admin-panel)').forEach(div => div.classList.add('hidden'));
+        
+        // Setup class on navbar links
+        document.querySelectorAll('.navbar span').forEach(s => s.classList.remove('active-nav'));
+
+        const target = (step === 1) ? 'step1' : (step === 3) ? 'step3' : (step === 5) ? 'step5' : 'step6';
+        
+        if (step === 1) {
+            document.getElementById('navHome').classList.add('active-nav');
+            renderUserMatchesTable();
+            renderPublicGroupsDashboard();
+        } else if (step === 'scout') {
+            document.getElementById('navTeams').classList.add('active-nav');
+            document.getElementById('scoutView').classList.remove('hidden');
+            return;
+        }
+
+        document.getElementById(target).classList.remove('hidden');
+    }
+
+    function verifyAndOpenTeam() {
+        const name = document.getElementById('teamNameInput').value.trim();
+        const enteredPin = document.getElementById('securityPinInput').value.trim();
+        if(!name || !enteredPin) return alert("Please fill all squad check parameters!");
+
+        let existingTeam = allTeams.find(t => t.name.toLowerCase() === name.toLowerCase() && t.sport === currentSport);
+        if(existingTeam) {
+            if(existingTeam.password !== enteredPin) return alert("❌ Incorrect Password for this team name! Lock security match failed.");
+            currentTeamData = JSON.parse(JSON.stringify(existingTeam));
+        } else {
+            // Check deadline
+            let todayStr = new Date().toISOString().split('T')[0];
+            if (todayStr > currentSavedDeadline && !isAdminLoggedIn) {
+                return alert("🔒 Sorry, the Registration is officially closed! Please contact District Board Sukkur.");
+            }
+            currentTeamData = { name: name, password: enteredPin, sport: currentSport, players: Array(15).fill(null) };
+        }
+        document.getElementById('currentRegTeamName').innerText = name.toUpperCase() + ` [${currentSport.toUpperCase()}]`;
+        renderRegistrationGrid();
+        goToStep(5);
+    }
+
+    function renderRegistrationGrid() {
+        const grid = document.getElementById('registrationGrid');
+        grid.innerHTML = "";
+        let count = 0;
+        for(let i=0; i<15; i++) {
+            const p = currentTeamData.players[i];
+            const div = document.createElement('div');
+            
+            let isFilled = p !== null;
+            if (isFilled) count++;
+
+            div.className = `player-box ${isFilled ? 'filled' : ''}`;
+            let imgSrc = (p && p.img) ? p.img : 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=150&auto=format&fit=crop';
+            
+            let detailLabel = isFilled ? `${p.role || ''}` : 'Roster Slot '+(i+1);
+            let jerseyBadge = isFilled && p.shirtNo ? `<span class="badge-shirt">#${p.shirtNo}</span>` : '';
+            
+            div.innerHTML = `${jerseyBadge}<img src="${imgSrc}"> <b>${isFilled ? p.name : 'Empty Slot'}</b><br><small style="color: #94a3b8; font-weight:600;">${detailLabel}</small>`;
+            div.onclick = () => openPlayerForm(i);
+            grid.appendChild(div);
+        }
+
+        document.getElementById('squadProgressBadge').innerText = `${count}/15 Players Locked`;
+        
+        // Style badge based on eligibility
+        if (count >= 11) {
+            document.getElementById('squadProgressBadge').style.background = "#198754";
+        } else {
+            document.getElementById('squadProgressBadge').style.background = "#007bff";
+        }
+    }
+
+    function openPlayerForm(index) {
+        tempPlayerIndex = index;
+        tempImageData = "";
+        document.getElementById('pPrev').innerHTML = "";
+        ['pName','pCast','pFather','pCnic','pShirtNo','pAddr'].forEach(id => document.getElementById(id).value = "");
+        
+        const p = currentTeamData.players[index];
+        if(p) {
+            document.getElementById('pName').value = p.name || "";
+            document.getElementById('pCast').value = p.cast || "";
+            document.getElementById('pFather').value = p.fatherName || "";
+            document.getElementById('pCnic').value = p.cnic || "";
+            document.getElementById('pDist').value = p.district || "Sialkot";
+            document.getElementById('pCity').value = p.city || "Sialkot";
+            document.getElementById('pRole').value = p.role || "";
+            document.getElementById('pSize').value = p.shirtSize || "M";
+            document.getElementById('pShirtNo').value = p.shirtNo || "";
+            document.getElementById('pAddr').value = p.address || "";
+            if(p.img) { tempImageData = p.img; document.getElementById('pPrev').innerHTML = `<img src="${p.img}">`; }
+        } else {
+            // Default select
+            document.getElementById('pDist').value = "Sialkot";
+            document.getElementById('pCity').value = "Sialkot";
+            document.getElementById('pRole').selectedIndex = 0;
+            document.getElementById('pSize').value = "M";
+            document.getElementById('pShirtNo').value = Math.floor(1 + Math.random() * 98);
+            document.getElementById('pAddr').value = "Jinnah Town, Sialkot";
+        }
+        goToStep(6);
+    }
+
+    function handleImage(input) {
+        if (input.files && input.files[0]) {
+            if(input.files[0].size > 150 * 1024) { alert("Max photo file size limit is 150KB!"); input.value = ""; return; }
+            let reader = new FileReader();
+            reader.onload = (e) => { tempImageData = e.target.result; document.getElementById('pPrev').innerHTML = `<img src="${tempImageData}">`; };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function savePlayerData() {
+        const name = document.getElementById('pName').value.trim();
+        const cnic = document.getElementById('pCnic').value.trim().replace(/[^0-9]/g, "");
+        
+        if(!name) return alert("Scout Player Name is required!");
+        if(!cnic || cnic.length < 5) return alert("Authentic Document CNIC/Form-B code sequence is required!"); 
+
+        let cnicExists = false;
+        let registeredTeamName = "";
+        let registeredSport = "";
+
+        // Dup Check across all structural teams playing of is sport
+        for (let team of allTeams) {
+            if (team.name.toLowerCase() === currentTeamData.name.toLowerCase() && team.sport === currentSport) {
+                continue; 
+            }
+            
+            if (team.players && Array.isArray(team.players)) {
+                let found = team.players.find(p => {
+                    if (p && p.cnic) {
+                        return p.cnic.trim().replace(/[^0-9]/g, "") === cnic;
+                    }
+                    return false;
+                });
+                
+                if (found) {
+                    cnicExists = true;
+                    registeredTeamName = team.name;
+                    registeredSport = team.sport;
+                    break;
+                }
+            }
+        }
+
+        if (cnicExists) {
+            alert(`❌ Duplicate Identity! This player (CNIC/B-Form: ${document.getElementById('pCnic').value}) is already registered under "${registeredTeamName}" [${registeredSport.toUpperCase()}]. One player is strictly forbidden from playing under multiple teams!`);
+            return; 
+        }
+
+        currentTeamData.players[tempPlayerIndex] = {
+            name: name, 
+            cast: document.getElementById('pCast').value.trim() || "-",
+            fatherName: document.getElementById('pFather').value.trim(),
+            cnic: document.getElementById('pCnic').value.trim(),
+            district: document.getElementById('pDist').value.trim() || "Sialkot",
+            city: document.getElementById('pCity').value.trim() || "Sialkot",
+            role: document.getElementById('pRole').value, 
+            shirtSize: document.getElementById('pSize').value, 
+            shirtNo: document.getElementById('pShirtNo').value.trim() || String(Math.floor(Math.random() * 99)), 
+            img: tempImageData || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=150&auto=format&fit=crop",
+            address: document.getElementById('pAddr').value.trim() || "Model Town"
+        };
+        
+        renderRegistrationGrid();
+        goToStep(5);
+    }
+
+    function autoFillDummyPlayers() {
+        if (!confirm("⚡ Do you want to automatically fill dummy player data for all empty slots in this squad? This is perfect for fast preview/audit.")) return;
+        
+        let lastNames = ['Khan', 'Malik', 'Butt', 'Siddiqui', 'Shah', 'Raza', 'Gujjar', 'Mughal', 'Ahmad', 'Jatt', 'Cheema', 'Dar', 'Sheikh', 'Gill', 'Cheema'];
+        let firstNames = ['Mohammad', 'Ali', 'Zain', 'Bilal', 'Ahmed', 'Usman', 'Hamza', 'Talha', 'Haris', 'Kamran', 'Rizwan', 'Hassan', 'Babar', 'Fakhar', 'Shaheen'];
+        let roles = SPORT_PLAYING_ROLES[currentSport];
+        let cities = ['Sialkot', 'Sambrial', 'Daska', 'Pasrur', 'Lahore'];
+
+        for(let i=0; i<15; i++) {
+            if (currentTeamData.players[i] === null) {
+                let fN = firstNames[i % firstNames.length];
+                let lN = lastNames[i % lastNames.length];
+                let fullname = `${fN} ${lN}`;
+                let city = cities[i % cities.length];
+                let size = ['S', 'M', 'L', 'XL', 'XXL'][i % 5];
+                let role = roles[i % roles.length];
+                let randCnic = `34601-${Math.floor(1000000 + Math.random() * 9000000)}-${i%9}`;
+
+                currentTeamData.players[i] = {
+                    name: fullname,
+                    cast: lN,
+                    fatherName: `${lastNames[(i+2)%lastNames.length]} Ahmad`,
+                    cnic: randCnic,
+                    district: "Sialkot",
+                    city: city,
+                    role: role,
+                    shirtSize: size,
+                    shirtNo: String((i + 1) * 3 % 99 || 10),
+                    img: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=150&auto=format&fit=crop",
+                    address: `Street ${i+1}, Model Town Sialkot`
+                };
+            }
+        }
+        renderRegistrationGrid();
+    }
+
+    function finalizeTeam() {
+        let filledCount = currentTeamData.players.filter(p => p !== null).length;
+        if(filledCount < 11) return alert("❌ Minimum 11 players must be locked completely to qualify squad slots!");
+
+        let btn = document.getElementById('submitTeamBtn');
+        btn.innerText = "⏳ lock Squad In Progress...";
+        btn.disabled = true;
+
+        let idx = allTeams.findIndex(t => t.name.toLowerCase() === currentTeamData.name.toLowerCase() && t.sport === currentSport);
+        if(idx !== -1) allTeams[idx] = currentTeamData; else allTeams.push(currentTeamData);
+        localStorage.setItem('globalTeamsList', JSON.stringify(allTeams));
+
+        if(GOOGLE_SHEET_URL && GOOGLE_SHEET_URL !== "YOUR_GOOGLE_SCRIPT_URL_HERE") {
+            fetch(GOOGLE_SHEET_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(currentTeamData)
+            }).then(() => {
+                showFinalSuccessResult();
+            }).catch(err => {
+                showFinalSuccessResult();
+            });
+        } else {
+            window.location.href = "NEW WORK.HTML";
+        }
+    }
+
+    function showFinalSuccessResult() {
+        let btn = document.getElementById('submitTeamBtn');
+        btn.innerText = "Submit & Lock Squad";
+        btn.disabled = false;
+
+        if(feesStatus === "ON" && !isAdminLoggedIn) {
+            document.querySelectorAll('.container > div:not(.navbar):not(.deadline-bar)').forEach(div => div.classList.add('hidden'));
+            document.getElementById('challanView').classList.remove('hidden');
+            document.getElementById('chNo').innerText = "#CH-" + currentTeamData.name.slice(0,3).toUpperCase() + "-" + Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('chTeam').innerText = currentTeamData.name;
+            document.getElementById('chSport').innerText = currentTeamData.sport;
+            document.getElementById('chAmount').innerText = "Rs. " + Number(feesAmount).toLocaleString() + " /-";
+            
+            // Populates dynamic bank account values on printed challan receipt card!
+            document.getElementById('chTitle').innerText = accountTitle || 'N/A';
+            document.getElementById('chBank').innerText = bankName || 'N/A';
+            document.getElementById('chAcc').innerText = accountNumber || 'N/A';
+            document.getElementById('chJazz').innerText = jazzCash || 'N/A';
+            document.getElementById('chEasy').innerText = easyPaisa || 'N/A';
+        } else {
+            showAllTeams();
+        }
+    }
+
+    function showAllTeams() {
+        allTeams = JSON.parse(localStorage.getItem('globalTeamsList')) || allTeams;
+        goToStep('scout');
+    }
+
+    function renderScoutTeamsList() {
+        const container = document.getElementById('teamsListContainer');
+        
+        // Filter teams list under category selection
+        let filteredTeams = allTeams.filter(t => t.sport === activePublicTabList);
+
+        container.innerHTML = filteredTeams.length === 0 ? `<p style="grid-column: span 3; text-align:center; padding: 40px; color:#94a3b8; font-weight:bold;">No teams registered in ${activePublicTabList.toUpperCase()} category yet.</p>` : "";
+        filteredTeams.forEach((team, idx) => {
+            // Find global array index of this team
+            let globalIdx = allTeams.findIndex(t => t.name.toLowerCase() === team.name.toLowerCase() && t.sport === team.sport);
+            
+            const div = document.createElement('div'); 
+            div.className = 'team-card';
+            
+            let count = team.players ? team.players.filter(p => p !== null).length : 0;
+            
+            let bColor = "#007bff";
+            if(team.sport==='cricket') bColor='var(--card-cricket)';
+            if(team.sport==='football') bColor='var(--card-football)';
+            if(team.sport==='hockey') bColor='var(--card-hockey)';
+            if(team.sport==='snooker') bColor='var(--card-snooker)';
+
+            div.innerHTML = `<span class="sport-tag" style="background:${bColor}; color:white;">${team.sport}</span>
+                             <h3 style="margin: 0 0 10px 0; font-family:'Space Grotesk';">🛡️ ${team.name}</h3>
+                             <p style="margin:0; font-size:12.5px; opacity:0.8; font-weight:bold; color:#ffc107;">${count}/15 Players Locked 🔒</p>`;
+            
+            div.onclick = () => viewSpecificTeam(globalIdx);
+            container.appendChild(div);
+        });
+    }
+
+    function viewSpecificTeam(index) {
+        const team = allTeams[index];
+        document.getElementById('scoutView').classList.add('hidden');
+        document.getElementById('teamDetailView').classList.remove('hidden');
+        document.getElementById('viewingTeamName').innerText = team.name.toUpperCase() + ` [${team.sport.toUpperCase()}]`;
+        const tbody = document.getElementById('squadTableBody'); 
+        tbody.innerHTML = "";
+        
+        if(team.players) {
+            team.players.forEach(p => {
+                if(p) {
+                    const tr = document.createElement('tr');
+                    let imgSrc = p.img ? p.img : 'https://via.placeholder.com/40?text=User';
+                    tr.className = "print-tr";
+                    tr.innerHTML = `<td><img src="${imgSrc}"></td>
+                                    <td><b>${p.name}</b><br><small style="color:#aaa; font-weight:500;">S/O: ${p.fatherName || "-"}</small></td>
+                                    <td>${p.cast}</td>
+                                    <td><span style="background:rgba(255,255,255,0.08); padding:3px 8px; border-radius:4px; font-weight:bold; font-size:11px; text-transform:uppercase;">${p.role}</span></td>
+                                    <td style="font-family:monospace; font-weight:600;">${p.cnic}</td>
+                                    <td style="text-align:center;"><b>S</b></td>
+                                    <td style="text-align:center; font-weight:black; color:#ffc107;">#${p.shirtNo || '-'}</td>`;
+                    tbody.appendChild(tr);
+                }
+            });
+        }
+    }
+
+    // Dynamic initial prefilled database values generator
+    function getPreloadedTeams() {
+        let sports = ['cricket', 'football', 'hockey', 'snooker'];
+        let preDefault = [
+            { name: "Sialkot Stallions", password: "123", sport: "cricket" },
+            { name: "Lahore Qalandars", password: "123", sport: "cricket" },
+            { name: "Sialkot Hawks FC", password: "123", sport: "football" },
+            { name: "Lahore Hawks FC", password: "123", sport: "football" },
+            { name: "Sialkot Turf Champions", password: "123", sport: "hockey" },
+            { name: "Faisalabad Gladiators", password: "123", sport: "hockey" },
+            { name: "Sialkot Greens Snooker Club", password: "123", sport: "snooker" },
+            { name: "Cueist Masters Sambrial", password: "123", sport: "snooker" }
+        ];
+
+        let listNames = ['Khan', 'Malik', 'Butt', 'Siddiqui', 'Shah', 'Raza', 'Gujjar', 'Mughal', 'Ahmad', 'Jatt', 'Cheema', 'Dar', 'Sheikh', 'Gill', 'Cheema'];
+        let firstNames = ['Mohammad', 'Ali', 'Zain', 'Bilal', 'Ahmed', 'Usman', 'Hamza', 'Talha', 'Haris', 'Kamran', 'Rizwan', 'Hassan', 'Babar', 'Fakhar', 'Shaheen'];
+
+        return preDefault.map(t => {
+            let playersArray = Array(15).fill(null);
+            let roles = SPORT_PLAYING_ROLES[t.sport];
+            
+            // Prefill with 15 dummy scout players
+            for(let i=0; i<15; i++) {
+                playersArray[i] = {
+                    name: `${firstNames[i % firstNames.length]} ${listNames[i % listNames.length]}`,
+                    cast: listNames[i % listNames.length],
+                    fatherName: `${listNames[(i+3)%listNames.length]} Ahmad`,
+                    cnic: `34601-${Math.floor(1000000 + Math.random() * 9000000)}-${i%9}`,
+                    district: "Sialkot",
+                    city: "Sialkot",
+                    role: roles[i % roles.length],
+                    shirtSize: ['S','M','L','XL','XXL'][i % 5],
+                    shirtNo: String((i + 1) * 3 % 99 || 10),
+                    img: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=150&auto=format&fit=crop",
+                    address: "District Sialkot Division"
+                };
+            }
+
+            return {
+                name: t.name,
+                password: t.password,
+                sport: t.sport,
+                players: playersArray
+            };
+        });
+    }
+
+    function getPreloadedMatches() {
+        return [
+            { sport: "cricket", t1: "Sialkot Stallions", t2: "Lahore Qalandars", date: "2026-07-28T14:30", venue: "Jinnah Stadium Sialkot" },
+            { sport: "football", t1: "Sialkot Hawks FC", t2: "Lahore Hawks FC", date: "2026-07-29T16:00", venue: "Municipal Football Arena" },
+            { sport: "hockey", t1: "Sialkot Turf Champions", t2: "Faisalabad Gladiators", date: "2026-07-30T17:00", venue: "Pasrur Astroturf Complex" },
+            { sport: "snooker", t1: "Sialkot Greens Snooker Club", t2: "Cueist Masters Sambrial", date: "2026-07-31T18:00", venue: "Greens Snooker Hall" }
+        ];
+    }
+
+    function getPreloadedGroups() {
+        return {
+            cricket: { A: ["Sialkot Stallions", "Lahore Qalandars"], B: [], C: [], D: [] },
+            football: { A: ["Sialkot Hawks FC", "Lahore Hawks FC"], B: [], C: [], D: [] },
+            hockey: { A: ["Sialkot Turf Champions", "Faisalabad Gladiators"], B: [], C: [], D: [] },
+            snooker: { A: ["Sialkot Greens Snooker Club", "Cueist Masters Sambrial"], B: [], C: [], D: [] }
+        };
+    }
+</script>
+</body>
+</html>

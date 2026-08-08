@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Malik Baradari Membership Form</title>
+
+<style>
+body{
+margin:0;
+font-family: times new roman;
+background-color:teal;
+color:rgba(250,250,60,120.54);
+}
+
+/* HEADER */
+.header{
+text-align:center;
+padding:18px;
+font-size:40px;
+font-weight:bold;
+background:rgba(20,150,150,100.4);
+
+
+}
+
+/* OPEN FORM (SPACIOUS) */
+.container{
+width:92%;
+max-width:1000px;
+margin:20px auto;
+background:rgba(25,20,55,01.08);
+padding:25px;
+border-radius:12px;
+backdrop-filter: blur(10px);
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
+
+input,select,textarea{
+padding:12px;
+border:none;
+border-radius:8px;
+outline:none;
+font-size:14px;
+}
+
+textarea{
+grid-column:1/3;
+min-height:80px;
+}
+
+/* BUTTON */
+button{
+padding:12px;
+border:none;
+border-radius:8px;
+background:#00c853;
+color:blue;
+cursor:pointer;
+width:100%;
+margin-top:10px;
+}
+
+/* TABLE */
+table{
+width:100%;
+margin-top:15px;
+border-collapse:collapse;
+background:pink;
+color:black;
+border-radius:10px;
+overflow:hidden;
+}
+
+th{
+background:#2c3e10;
+color:black;
+padding:10px;
+}
+
+td{
+text-align:center;
+padding:10px;
+}
+
+img{
+width:45px;
+height:45px;
+border-radius:20%;
+object-fit:cover;
+}
+
+/* LOGIN */
+.loginBox{
+display:none;
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.7);
+justify-content:center;
+align-items:center;
+}
+
+.loginCard{
+background:white;
+color:black;
+padding:20px;
+border-radius:10px;
+width:280px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+🌿 Malik Baradari Membership Registration Form🌿
+</div>
+
+<!-- FORM -->
+<div class="container">
+
+<div class="grid">
+
+<input id="name" placeholder="Name">
+<input id="fname" placeholder="Father Name">
+<input id="cnic" placeholder="CNIC (13 digits)">
+<input id="phone" placeholder="Phone">
+
+<select id="province" onchange="loadDistricts()">
+<option value="">Select Province</option>
+<option>Punjab</option>
+<option>Sindh</option>
+<option>KPK</option>
+<option>Balochistan</option>
+<option>Islamabad</option>
+</select>
+
+<select id="district"></select>
+
+<input id="city" placeholder="City">
+
+<select id="disability">
+<option value="">Disability</option>
+<option value="No">No Disability</option>
+<option value="Yes">Has Disability</option>
+</select>
+
+<input id="job" placeholder="Occupation">
+
+</div>
+
+<textarea id="address" placeholder="Full Address"></textarea>
+
+<input type="file" id="pic">
+
+<button onclick="register()">Submit Member</button>
+<button onclick="openLogin()">Admin Panel</button>
+
+</div>
+
+<!-- LOGIN -->
+<div class="loginBox" id="loginBox">
+<div class="loginCard">
+<h3>Admin Login</h3>
+<input type="password" id="pass">
+<button onclick="login()">Login</button>
+</div>
+</div>
+
+<!-- ADMIN -->
+<div class="container" id="adminPanel" style="display:none;">
+
+<h3>Admin Dashboard</h3>
+
+<select id="filterDistrict" onchange="showData()">
+<option value="">All Districts</option>
+</select>
+
+<button onclick="printDistrict()">🖨️ Print District Wise</button>
+
+<table>
+<thead>
+<tr>
+<th>Pic</th>
+<th>Name</th>
+<th>CNIC</th>
+<th>Phone</th>
+<th>District</th>
+<th>Disability</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody id="dataTable"></tbody>
+</table>
+
+</div>
+
+<script>
+
+let data = JSON.parse(localStorage.getItem("members")) || [];
+
+/* FULL DISTRICT SYSTEM */
+function loadDistricts(){
+
+let province = document.getElementById("province").value;
+let d = document.getElementById("district");
+
+let map = {
+Punjab:["Lahore","Faisalabad","Multan","Rawalpindi","Gujranwala","Sialkot","Bahawalpur","Sargodha","Sheikhupura","Rahim Yar Khan"],
+Sindh:["Karachi","Hyderabad","Sukkur","Larkana","Mirpurkhas","Nawabshah","Thatta","Jacobabad"],
+KPK:["Peshawar","Mardan","Swat","Abbottabad","Kohat","Bannu","Dera Ismail Khan"],
+Balochistan:["Quetta","Gwadar","Khuzdar","Turbat","Sibi","Zhob"],
+Islamabad:["Islamabad"]
+};
+
+d.innerHTML="";
+
+if(map[province]){
+map[province].forEach(x=>{
+d.innerHTML += `<option value="${x}">${x}</option>`;
+});
+}
+}
+
+/* REGISTER */
+function register(){
+
+let cnic = document.getElementById("cnic").value.trim();
+
+if(cnic.length !== 13){
+alert("Invalid CNIC");
+return;
+}
+
+if(data.find(x => x.cnic === cnic)){
+alert("CNIC already exists!");
+return;
+}
+
+let pic = document.getElementById("pic").files[0];
+let reader = new FileReader();
+
+reader.onload = function(){
+
+data.push({
+id: Date.now(),
+name: document.getElementById("name").value,
+fname: document.getElementById("fname").value,
+cnic: cnic,
+phone: document.getElementById("phone").value,
+province: document.getElementById("province").value,
+district: document.getElementById("district").value,
+city: document.getElementById("city").value,
+disability: document.getElementById("disability").value,
+job: document.getElementById("job").value,
+address: document.getElementById("address").value,
+pic: reader.result
+});
+
+localStorage.setItem("members", JSON.stringify(data));
+alert("Member Added Successfully!");
+showData();
+};
+
+if(pic) reader.readAsDataURL(pic);
+}
+
+/* LOGIN */
+function openLogin(){
+document.getElementById("loginBox").style.display="flex";
+}
+
+function login(){
+if(document.getElementById("pass").value === "malik786"){
+document.getElementById("adminPanel").style.display="block";
+document.getElementById("loginBox").style.display="none";
+showData();
+}else{
+alert("Wrong Password");
+}
+}
+
+/* SHOW DATA */
+function showData(){
+
+let filter = document.getElementById("filterDistrict").value;
+let table = "";
+
+/* also fill filter dropdown once */
+let filterBox = document.getElementById("filterDistrict");
+if(filterBox.options.length === 1){
+data.forEach(d=>{
+if([...filterBox.options].findIndex(o=>o.value===d.district) === -1){
+let opt = document.createElement("option");
+opt.value = d.district;
+opt.text = d.district;
+filterBox.appendChild(opt);
+}
+});
+}
+
+data.forEach((d,i)=>{
+
+if(filter === "" || d.district === filter){
+
+table += `
+<tr>
+<td><img src="${d.pic}"></td>
+<td>${d.name}</td>
+<td>${d.cnic}</td>
+<td>${d.phone}</td>
+<td>${d.district}</td>
+<td>${d.disability}</td>
+<td>
+<button onclick="printOne(${i})">Print</button>
+<button onclick="del(${i})">Delete</button>
+</td>
+</tr>
+`;
+}
+
+});
+
+document.getElementById("dataTable").innerHTML = table;
+}
+
+/* PRINT ONE */
+function printOne(i){
+let d = data[i];
+let w = window.open();
+
+w.document.write(`
+<html><body>
+<h2>${d.name}</h2>
+<img src="${d.pic}" style="width:120px;height:120px;border-radius:50%">
+<p>CNIC: ${d.cnic}</p>
+<p>Phone: ${d.phone}</p>
+<p>District: ${d.district}</p>
+<p>Disability: ${d.disability}</p>
+</body></html>
+`);
+
+w.print();
+}
+
+/* PRINT DISTRICT WISE */
+function printDistrict(){
+
+let filter = document.getElementById("filterDistrict").value;
+
+let w = window.open();
+w.document.write("<h2>District Wise Members</h2>");
+
+data.forEach(d=>{
+if(filter === "" || d.district === filter){
+
+w.document.write(`
+<hr>
+<img src="${d.pic}" style="width:80px;height:80px;border-radius:50%"><br>
+<b>${d.name}</b><br>
+${d.cnic}<br>
+${d.phone}<br>
+${d.district}<br>
+${d.disability}
+`);
+}
+});
+
+w.print();
+}
+
+/* DELETE */
+function del(i){
+data.splice(i,1);
+localStorage.setItem("members", JSON.stringify(data));
+showData();
+}
+
+</script>
+
+</body>
+</html>
